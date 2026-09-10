@@ -1,3 +1,4 @@
+#this custom python package is largely adapted from Weiyi Tang's original work, with modificaiton from Marco Mravic & Colleen Maillie   
 import sys, numpy as np, time, collections
 from prody import *
 from helix_dimer_geometryV3 import *
