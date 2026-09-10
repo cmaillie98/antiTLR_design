@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --partition=shared
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=16
+#SBATCH --mem=125gb
+#SBATCH --time=16-00:00:00
+#SBATCH --job-name=cst_file
+
+
+module purge
+module load python
+module load rosetta/2022.11
+
+
+#clea PDB first 
+#release chain B for design - no constraints here except for 3 terminal residues
+python /opt/applications/rosetta/2022.11/gnu/main/tools/protein_tools/scripts/generate_atom_pair_constraint_file.py tmhop_mod5_initial.pdb constraints.cst --release_file release_chain_B.txt

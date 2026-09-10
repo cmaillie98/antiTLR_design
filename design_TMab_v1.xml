@@ -1,0 +1,66 @@
+<ROSETTASCRIPTS>
+ 
+  <TASKOPERATIONS>
+         <LimitAromaChi2 name="arochi"/>
+         <ExtraRotamersGeneric name="ex1_ex2" ex1="1" ex2="1"/>
+         <ReadResfile name="resfile" filename="%%resfile%%"/>
+         <IncludeCurrent name="input_sc" />
+
+   </TASKOPERATIONS>
+
+  <RESIDUE_SELECTORS>
+     <Chain name="chAB" chains="A,B"/>
+     <Chain name="chA" chains="A"/>
+     <Chain name="chB" chains="B"/>
+  </RESIDUE_SELECTORS>
+
+
+ 	<SCOREFXNS>
+    
+    <ScoreFunction name="score" weights="mpframework_smooth_fa_2012"/>
+    <ScoreFunction name="cart_old" weights="mpframework_smooth_fa_2012">
+         <Reweight scoretype="coordinate_constraint" weight="2" />
+         <Reweight scoretype="aa_composition" weight="1.0" />
+         <Reweight scoretype="hbond_sc" weight="1.2" />
+         <Reweight scoretype="fa_elec" weight="1.2" />
+    </ScoreFunction>
+ 	</SCOREFXNS>
+ 
+
+ <FILTERS>
+
+
+ </FILTERS>
+
+
+
+	<MOVERS>
+
+    <ConstraintSetMover name="add_cst" cst_file="%%cst_file%%"/>
+ 	<AddMembraneMover name="add_memb"/>
+ 	<MembranePositionFromTopologyMover name="init_pos"/>
+ 	<SetMembranePositionMover name="init_posMEM"/>
+ 	<FastRelax name="fast_design_relax" disable_design="0" scorefxn="score" relaxscript="InterfaceDesign2019" repeats="4" task_operations="arochi,ex1_ex2,input_sc,resfile" cst_file="%%cst_file%%"/>
+
+ 	<FastDesign name="fast_design" disable_design="0" scorefxn="cart_old" relaxscript="InterfaceDesign2019" repeats="8" task_operations="arochi,ex1_ex2,input_sc,resfile" cst_file="%%cst_file%%"/>
+
+
+ 	<InterfaceAnalyzerMover name="interface-data" scorefxn="score" packstat="1" interface_sc="1" interface="A_B" pack_separated="1"/>
+
+
+
+	</MOVERS>
+ 
+	<PROTOCOLS>
+
+	<Add mover="add_memb"/>
+	<Add mover="init_posMEM"/>
+	<Add mover="fast_design"/>
+	<Add mover="interface-data"/>
+    
+
+	</PROTOCOLS>
+
+	<OUTPUT scorefxn="score"/>
+
+</ROSETTASCRIPTS>
