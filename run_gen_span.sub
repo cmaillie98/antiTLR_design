@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=shared
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=16
-#SBATCH --mem=125gb
-#SBATCH --time=16-00:00:00
-#SBATCH --job-name=af_rank3
+#SBATCH --partition=
+#SBATCH --nodes=
+#SBATCH --ntasks-per-node=
+#SBATCH --mem=
+#SBATCH --time=
+#SBATCH --job-name=FILE_NAME
 
 
 module purge
